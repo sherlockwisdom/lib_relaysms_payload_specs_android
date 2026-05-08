@@ -32,29 +32,36 @@ class Email(private val data: ByteArray? = null) : Contents() {
         var indicator: Byte = 0
 
         lenTo = to?.toByteArray()?.size ?: 0
+        if(lenTo.toUInt() > 32u) throw Exception("TO length > 32 - $lenTo")
+
         lenBody = body?.toByteArray()?.size ?: 0
+        if(lenBody.toUInt() > 560u) throw Exception("BODY length > 560 - $lenBody")
 
         if(!subject.isNullOrEmpty()) {
             iSubject = true
             lenSubject = subject!!.toByteArray().size
+            if(lenSubject.toUInt() > 32u) throw Exception("SUBJECT length > 32 - $lenSubject")
             indicator = 1
         }
 
         if(!bcc.isNullOrEmpty()) {
             iBcc = true
             lenBcc = bcc!!.toByteArray().size
+            if(lenBcc.toUInt() > 32u) throw Exception("BCC length > 32 - $lenBcc")
             indicator = indicator.turnBitOn(1)
         }
 
         if(!cc.isNullOrEmpty()) {
             iCc = true
             lenCc = cc!!.toByteArray().size
+            if(lenCc.toUInt() > 32u) throw Exception("CC length > 32 - $lenCc")
             indicator = indicator.turnBitOn(2)
         }
 
         if(!from.isNullOrEmpty()) {
             iFrom = true
             lenFrom = from!!.toByteArray().size
+            if(lenFrom > 32) throw Exception("FROM length > 32 - $lenFrom")
             indicator = indicator.turnBitOn(3)
         }
         emailContent[0] = indicator
