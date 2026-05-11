@@ -1,5 +1,6 @@
 package com.afkanerd.smswithoutborders.payload_specs
 
+import com.afkanerd.smswithoutborders.payload_specs.payload.extensions.getBitsDownTo
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -12,6 +13,9 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        val value: Short = 32767
+        val expected: Short = 8191
+        val gotten = value.getBitsDownTo(12)
+        assertEquals(expected, gotten)
     }
 }

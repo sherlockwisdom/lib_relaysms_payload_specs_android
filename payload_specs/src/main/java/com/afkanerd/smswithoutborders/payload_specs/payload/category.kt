@@ -1,4 +1,5 @@
 package com.afkanerd.smswithoutborders.payload_specs.payload
 
-class category {
+abstract class Category {
+    abstract fun serialize(): ByteArray
 }
